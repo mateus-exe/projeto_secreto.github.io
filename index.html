@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>Um pedido especial 💖</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+      background: #fce4ec;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .carta {
+      width: 250px;
+      cursor: pointer;
+      transition: transform 0.3s;
+    }
+
+    .carta:hover {
+      transform: scale(1.1);
+    }
+
+    .declaracao {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.9);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      color: white;
+      text-align: center;
+      padding: 20px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.5s;
+      overflow-y: auto;
+    }
+
+    .declaracao.mostrar {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .carrossel {
+      position: relative;
+      width: 80%;
+      max-width: 600px;
+      height: 400px;
+      margin: 20px auto;
+      overflow: hidden;
+      border-radius: 15px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+    }
+
+    .slides {
+      display: flex;
+      width: 100%;
+      height: 100%;
+      transition: transform 0.5s ease-in-out;
+    }
+
+    .slides img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      flex-shrink: 0;
+    }
+
+    /* setas ocultas */
+    .nav-btn {
+      display: none;
+    }
+
+    .texto {
+      margin-top: 20px;
+      font-size: 1.4em;
+    }
+
+    .controles {
+      margin-top: 25px;
+      position: relative;
+    }
+
+    button {
+      background: #e91e63;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      margin: 10px;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: 0.3s;
+      font-size: 1em;
+      position: relative;
+    }
+
+    button:hover {
+      background: #ad1457;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Carta -->
+  <img src="cHJpdmF0ZS9sci9pbWFnZXMvd2Vic2l0ZS8yMDIzLTA4L3Jhd3BpeGVsX29mZmljZV8zNV9yZWFsX3Bob3RvX29mX2xvdmVfbGV0dGVyX21pbmltYWxfaXNvbGF0ZWRfb19jODJhOGRhOS1lYjI1LTQzYjktOWYwZS02ZWZjMWMxNDg4NTJfMS5wbmc-removebg-pre.png" 
+       alt="Carta de amor" class="carta">
+
+  <!-- Declaração -->
+  <div class="declaracao" id="declaracao">
+
+    <!-- Carrossel -->
+    <div class="carrossel">
+      <div class="slides" id="slides">
+        <img src="IMG-20250810-WA0110.jpg" alt="Foto 1">
+        <img src="IMG-20250809-WA0125.jpg" alt="Foto 2">
+        <img src="eajgabs_3665978424962765383's2025-9-5-15.41.929 story.jpg" alt="Foto 3">
+        <img src="eajgabs_3645323200377913058's2025-9-5-15.41.782 story.jpg" alt="Foto 4">
+        <img src="eajgabs_3689127259205356420's2025-9-5-15.40.262 story.jpg" alt="Foto 5">
+        <img src="eajgabs_3711463198173347447's2025-9-5-15.40.60 story.jpg" alt="Foto 6">
+        <img src="IMG_9338.jpg" alt="Foto 7">
+      </div>
+    </div>
+
+    <!-- Texto e pergunta -->
+    <div class="texto">
+      <p>Gabrielly, cada momento com você é único e especial, você é a mulher da minha vida, eu te amo minha princesinha 💕</p>
+      <h2>Quer namorar comigo? 💖</h2>
+    </div>
+
+    <!-- Botões -->
+    <div class="controles">
+      <button id="sim">Sim!</button>
+      <button id="nao">Não 😢</button>
+    </div>
+  </div>
+
+  <!-- Música romântica -->
+  <audio id="musica" loop>
+    <source src="musica.mp3" type="audio/mpeg">
+    Seu navegador não suporta áudio.
+  </audio>
+
+  <script>
+    // Abrir declaração
+    document.querySelector(".carta").addEventListener("click", function() {
+      document.getElementById("declaracao").classList.add("mostrar");
+      document.getElementById("musica").play();
+    });
+
+    // Carrossel
+    let indice = 0;
+    const slides = document.getElementById("slides");
+    const totalSlides = slides.children.length;
+
+    function mudarSlide(direcao) {
+      indice = (indice + direcao + totalSlides) % totalSlides;
+      slides.style.transform = "translateX(" + (-indice * 100) + "%)";
+    }
+
+    // Avanço automático a cada 5 segundos
+    setInterval(() => {
+      mudarSlide(1);
+    }, 5000);
+
+    // Resposta SIM
+    document.getElementById("sim").addEventListener("click", function() {
+      alert("Eu sabia!!! 😍💖");
+    });
+
+    // Botão NÃO que foge (em posições aleatórias pela tela)
+    document.getElementById("nao").addEventListener("mouseover", function() {
+      const larguraTela = window.innerWidth;
+      const alturaTela = window.innerHeight;
+
+      // limitar para não sobrepor o topo e nem os botões
+      const novaEsquerda = Math.random() * (larguraTela - this.offsetWidth - 50);
+      const novaTopo = Math.random() * (alturaTela - this.offsetHeight - 50);
+
+      this.style.position = "fixed";
+      this.style.left = novaEsquerda + "px";
+      this.style.top = novaTopo + "px";
+    });
+  </script>
+
+</body>
+</html>
